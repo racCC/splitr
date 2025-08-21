@@ -3,10 +3,10 @@ import { useConvexAuth } from "convex/react";
 import { useEffect, useState } from "react";
 import { useMutation } from "convex/react";
 import { api } from "../convex/_generated/api";
-// import { Id } from "../convex/_generated/dataModel";
+
 
 export function useStoreUserEffect() {
-  const { isLoading, isAuthenticated } = useConvexAuth();
+const { isLoading, isAuthenticated } = useConvexAuth();
   const { user } = useUser();
   // When this state is set we know the server
   // has stored the user.

@@ -60,3 +60,71 @@ export const getCurrentUser = query({
     return user;
   },
 });
+
+// Search users by name or email (for adding participants)
+export const searchUsers = query({
+  args: {
+    query: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    // Use centralized getCurrentUser function
+    const currentUser = await ctx.runQuery(internal.users.getCurrentUser);
+
+    // Always return all users if no query provided
+    const allUsers = await ctx.db
+      .query("users")
+      .filter((q) => q.neq(q.field("_id"), currentUser._id))
+      .collect();
+
+    // If no query or query too short, return all users
+    if (!args.query) {
+      return allUsers.map(user => ({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        imageUrl: user.imageUrl
+      }));
+    }
+
+    // Only search if query is long enough
+    if (args.query.length >= 2) {
+      // Search by name using search index
+      const nameResults = await ctx.db
+        .query("users")
+        .withSearchIndex("search_name", (q) => q.search("name", args.query))
+        .collect();
+
+      // Search by email using search index
+      const emailResults = await ctx.db
+        .query("users")
+        .withSearchIndex("search_email", (q) => q.search("email", args.query))
+        .collect();
+
+      // Combine results (removing duplicates)
+      const users = [
+        ...nameResults,
+        ...emailResults.filter(
+          (email) => !nameResults.some((name) => name._id === email._id)
+        ),
+      ];
+
+      // Exclude current user and format results
+      return users
+        .filter((user) => user._id !== currentUser._id)
+        .map((user) => ({
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          imageUrl: user.imageUrl,
+        }));
+    }
+
+    // Return all users for short queries
+    return allUsers.map(user => ({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      imageUrl: user.imageUrl
+    }));
+  },
+});

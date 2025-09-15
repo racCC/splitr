@@ -5,14 +5,15 @@ import { Button } from "./ui/button";
 import { LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import { SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
-import { useStoreUserEffect } from "@/hooks/use-store-user";
+import { useStoreUser } from "@/hooks/use-store-user";
 import { BarLoader } from "react-spinners";
 import { Authenticated, Unauthenticated } from "convex/react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 export default function Header() {
-  const { isLoading } = useStoreUserEffect();
+  const { isLoading } = useStoreUser();
+  
   const path = usePathname();
 
   return (

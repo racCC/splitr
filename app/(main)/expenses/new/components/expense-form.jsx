@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,6 +25,7 @@ import {
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { getAllCategories } from "@/lib/expense-categories";
+
 // Form schema validation
 const expenseSchema = z.object({
   description: z.string().min(1, "Description is required"),
@@ -39,8 +41,9 @@ const expenseSchema = z.object({
   splitType: z.enum(["equal", "percentage", "exact"]),
   groupId: z.string().optional(),
 });
-const  ExpenseForm=({type,onSuccess })=>{
- const [participants, setParticipants] = useState([]);
+
+export function ExpenseForm({ type = "individual", onSuccess }) {
+  const [participants, setParticipants] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [splits, setSplits] = useState([]);
@@ -359,4 +362,3 @@ const  ExpenseForm=({type,onSuccess })=>{
     </form>
   );
 }
-export default ExpenseForm;

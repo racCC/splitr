@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<img width="2539" height="1291" alt="Screenshot 2025-09-16 203120" src="https://github.com/user-attachments/assets/117bbd41-3cf0-4e88-b533-d6dcc2476270" />
 
-## Getting Started
 
-First, run the development server:
+# Splitr💸 AI-Powered Splitwise Clone
+
+A full-stack expense-splitting app inspired by Splitwise — rebuilt with modern tools, AI insights, and automated reminders.
+
+Built using **Next.js 15**, **React 19**, **Convex**, **Clerk**, **Inngest**, **Resend**, **Gemini AI**, **Tailwind CSS**, and **Shadcn UI**.
+
+
+
+## ✨ Features
+
+- 🔐 Authentication with **Clerk** (email, password, social logins)
+- 👥 Manage **contacts** (individuals & groups)
+- 💵 Add **1-on-1** and **group expenses**
+- 📊 **Dashboard** with balances and summaries
+- 🤝 **Settlements** to clear balances
+- ⏰ Automated **payment reminders** via **Inngest + Resend**
+- 🤖 Weekly **AI insights** powered by **Gemini**
+- 🎨 Modern, accessible UI with **Shadcn UI** + **Tailwind CSS**
+- 🌐 Deployed with **Vercel** + serverless backends
+
+
+
+## 🛠 Tech Stack
+
+- **Frontend:** Next.js 15 (App Router), React 19  
+- **Backend:** Convex (serverless DB & functions)  
+- **Auth:** Clerk  
+- **Cron / Background jobs:** Inngest  
+- **Emails:** Resend  
+- **AI:** Gemini API  
+- **UI:** Tailwind + Shadcn UI  
+
+
+
+## 🚀 Getting Started
+
+### 1. Clone & Install
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/<your-username>/<repo-name>.git
+cd <repo-name>
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Configure Environment
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Create a `.env.local` file:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+# Clerk
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
+CLERK_SECRET_KEY=sk_test_...
 
-## Learn More
+# Convex
+CONVEX_DEPLOYMENT=dev
+CONVEX_AUTH_URL=http://localhost:3000
 
-To learn more about Next.js, take a look at the following resources:
+# Inngest
+INNGEST_EVENT_KEY=...
+INNGEST_SIGNING_KEY=...
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Resend
+RESEND_API_KEY=re_...
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Gemini
+GEMINI_API_KEY=AIza...
 
-## Deploy on Vercel
+# App
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 3. Run Dev Servers
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+# Next.js
+npm run dev
+
+# Convex (backend)
+npx convex dev
+
+# Inngest (jobs)
+npx inngest dev
+```
+
+
+
+
+
+## 📂 Project Structure
+
+```
+.
+├─ app/                # Next.js routes (App Router)
+├─ components/         # UI + shared components
+├─ convex/             # Backend functions & schema
+├─ inngest/            # Cron + event handlers
+├─ hooks/              # Custom React hooks
+├─ lib/                # Utils (AI, email, auth helpers)
+├─ public/            
+└─ README.md
+```
+---
